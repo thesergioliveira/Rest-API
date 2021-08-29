@@ -7,10 +7,14 @@ const {
   getStudent,
   displayUser,
   updateOneStudent,
+  updateAllStudentData,
 } = require("../controllers/studentsControllers");
 
 router.route("/").get(getAllStudents).post(addStudent);
-router.route("/:name").put(getStudent).patch(getStudent, updateOneStudent);
+router
+  .route("/:name")
+  .put(updateAllStudentData)
+  .patch(getStudent, updateOneStudent);
 router.route("/display/:name").get(getStudent, displayUser);
 
 module.exports = router;

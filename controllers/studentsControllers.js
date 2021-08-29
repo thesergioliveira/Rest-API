@@ -58,23 +58,53 @@ const displayUser = async (req, res) => res.status(200).json(res.student);
 
 // Updating one student partial or full information
 const updateOneStudent = async (req, res) => {
+  //   console.log(res.student);
+  //   console.log(req.body);
   const { username, userPass, age, fbw, toolStack, email } = req.body;
-  if (username) {
-    res.student.username = username;
-  } else if (userPass) {
-    res.student.userPass = userPass;
-  } else if (age) {
-    res.student.age = age;
-  } else if (fbw) {
-    res.student.fbw = fbw;
-  } else if (toolStack) {
-    res.student.toolStack = toolStack;
-  } else if (email) {
-    res.student.email = email;
-  }
+  if (username) res.student.username = username;
+
+  if (userPass) res.student.userPass = userPass;
+
+  if (age) res.student.age = age;
+
+  if (fbw) res.student.fbw = fbw;
+
+  if (toolStack) res.student.toolStack = toolStack;
+
+  if (email) res.student.email = email;
+
   try {
-    const updatedUser = await res.student.save();
-    res.status(200).json({ message: "The user was updated", updatedUser });
+    await res.student.save();
+    res.status(200).json({ message: "The user was updated" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+// Updating all information of a specific student - htpp://localhost:5000/user/:name
+const updateAllStudentData = async (req, res) => {
+  const { name, pass, newAge, newClass, tools, contact } = req.body;
+  console.log(req.params.name);
+  try {
+    await StudentsData.updateOne(
+      { username: req.params.name },
+      {
+        $set: {
+          username: name,
+          userPass: pass,
+          age: newAge,
+          //   fbw: newClass,
+          //   toolStack: tools,
+          //   email: contact,
+        },
+        $currentDate: {
+          studentUpdateDate: Date.now,
+        },
+      }
+    );
+    res
+      .status(200)
+      .json({ message: `the student ${req.params.name}, got updated!` });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -86,4 +116,5 @@ module.exports = {
   getStudent,
   displayUser,
   updateOneStudent,
+  updateAllStudentData,
 };
