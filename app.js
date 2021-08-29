@@ -22,6 +22,10 @@ mongoose
 // importing and using a main route
 
 // Creating and defining the response for the root route
+
+const students = require("./router/students");
+app.use("/user", students);
+
 app.get("/", async (req, res) => {
   res.status(200);
 
@@ -32,8 +36,5 @@ app.get("/", async (req, res) => {
     res.send(html);
   });
 });
-
-const students = require("./router/students");
-app.use("/students", students);
 
 module.exports = app;
