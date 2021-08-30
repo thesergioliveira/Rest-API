@@ -1,4 +1,3 @@
-const { send } = require("process");
 const StudentsData = require("../model/studentsModel");
 
 // Middlewares_____________________________________
@@ -103,8 +102,8 @@ const addStudent = async (req, res) => {
 
 //Display user - http://localhost:5000/user/display/:name
 const displayUser = async (req, res) => {
-  console.log(res.student);
-  res.status(200).json(res.student);
+  // console.log(res.editedStudent);
+  res.status(200).json(res.editedStudent);
 };
 // Updating one student partial or full information
 const updateOneStudent = async (req, res) => {
