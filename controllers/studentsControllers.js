@@ -1,7 +1,7 @@
 const { send } = require("process");
 const StudentsData = require("../model/studentsModel");
 
-// Middlewares
+// Middlewares_____________________________________
 // find one student upon name search
 const getStudent = async (req, res, next) => {
   let user;
@@ -19,14 +19,32 @@ const getStudent = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
   res.student = user;
-  console.log(res.student);
+  // console.log(res.student);
   next();
 };
 
 // capitalizing first letter
-const capitalizeUsername = async (req, res, next) => {
-  const name = res.student.username;
-  console.log(name);
+const processingStudent = async (req, res, next) => {
+  // importing
+  let { username, userPass, age, fbw, toolStack, email } = res.student;
+  let newAge;
+  let newFbw;
+  // processing
+  username = username.charAt(0).toUpperCase() + username.slice(1);
+  let sortedTools = toolStack.sort();
+  if (typeof age == "string") newAge = Number(age); //could also work as parseInt(age, 10);
+  if (typeof fbw === "string") newFbw = Number(fbw);
+  // exporting
+  res.editedStudent = {
+    username,
+    userPass,
+    newAge,
+    newFbw,
+    sortedTools,
+    email,
+  };
+  // console.log(res.editedStudent);
+  next();
 };
 
 // checking out if required DB Schema was met
@@ -43,19 +61,15 @@ const mustContain = (req, res, next) => {
         "We can not validate your user. We don't accept pp that are below 18 years of age",
     });
   } else if (fbw != "48") {
-    return res
-      .status(400)
-      .json({
-        message:
-          "we can not validate your user. They are not a member of FBW48",
-      });
+    return res.status(400).json({
+      message: "we can not validate your user. They are not a member of FBW48",
+    });
   }
   res.student = req.body;
   next();
 };
 
-// filtering the
-// Controllers
+// Controllers_____________________________________
 // Fetch all the data in the DB
 //http://localhost:5000/user
 const getAllStudents = async (req, res) => {
@@ -153,6 +167,6 @@ module.exports = {
   displayUser,
   updateOneStudent,
   updateAllStudentData,
-  capitalizeUsername,
+  processingStudent,
   mustContain,
 };

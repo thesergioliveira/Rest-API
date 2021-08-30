@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const studentsDataSchema = new mongoose.Schema({
   username: {
     type: String,
+    lowercase: true,
     trim: true,
     required: [true, "It is required to give a name "],
   },
@@ -21,11 +22,12 @@ const studentsDataSchema = new mongoose.Schema({
       "Please provide your age. Also note, that you must be above 18 in order to use the Application!",
     ],
   },
-  fbw: { type: Number },
+  fbw: {
+    type: {},
+  },
   toolStack: Array,
   email: {
     type: String,
-    required: [true, "It is required to register an email!"],
   },
 });
 module.exports = mongoose.model("StudentsData", studentsDataSchema, "students");
