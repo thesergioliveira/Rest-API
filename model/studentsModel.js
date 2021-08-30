@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const studentsDataSchema = new mongoose.Schema({
   username: {
     type: String,
-    lowercase: true,
+    // lowercase: true,
     trim: true,
     required: [true, "It is required to give a name "],
   },

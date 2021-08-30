@@ -9,7 +9,7 @@ const getStudent = async (req, res, next) => {
     // localhost:5000/user/display/Sergio
     user = await StudentsData.findOne({ username: req.params.name });
 
-    // console.log(user);
+    console.log(user);
     if (user == null)
       return res
         .status(404)
@@ -31,8 +31,16 @@ const processingStudent = async (req, res, next) => {
   // processing
   username = username.charAt(0).toUpperCase() + username.slice(1);
   let sortedTools = toolStack.sort();
-  if (typeof age == "string") newAge = Number(age); //could also work as parseInt(age, 10);
-  if (typeof fbw === "string") newFbw = Number(fbw);
+  if (typeof age !== "string") {
+    newAge = age;
+  } else {
+    newAge = Number(age); //could also work as parseInt(age, 10);
+  }
+  if (typeof fbw !== "string") {
+    newFbw = fbw;
+  } else {
+    newFbw = Number(fbw);
+  }
   // exporting
   res.editedStudent = {
     username,
@@ -42,7 +50,7 @@ const processingStudent = async (req, res, next) => {
     sortedTools,
     email,
   };
-  // console.log(res.editedStudent);
+  console.log(res.editedStudent);
   next();
 };
 
