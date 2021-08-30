@@ -2,12 +2,15 @@ const { send } = require("process");
 const StudentsData = require("../model/studentsModel");
 
 // Middlewares
+// find one student upon name search
 const getStudent = async (req, res, next) => {
   let user;
-  console.log(req.params.name);
+  // console.log(req.params.name);
   try {
+    // localhost:5000/user/display/Sergio
     user = await StudentsData.findOne({ username: req.params.name });
-    console.log(user);
+
+    // console.log(user);
     if (user == null)
       return res
         .status(404)
@@ -16,9 +19,42 @@ const getStudent = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
   res.student = user;
+  console.log(res.student);
   next();
 };
 
+// capitalizing first letter
+const capitalizeUsername = async (req, res, next) => {
+  const name = res.student.username;
+  console.log(name);
+};
+
+// checking out if required DB Schema was met
+const mustContain = (req, res, next) => {
+  const { username, userPass, age, fbw, toolStack, email } = req.body;
+  if (!username || !userPass || !age || !fbw || !email) {
+    return res.status(400).json({
+      message:
+        "We cannot validate your user. The keys username, userPass, age, fbw and email are required make sure to add them :) ",
+    });
+  } else if (age <= "18") {
+    return res.status(400).json({
+      message:
+        "We can not validate your user. We don't accept pp that are below 18 years of age",
+    });
+  } else if (fbw != "48") {
+    return res
+      .status(400)
+      .json({
+        message:
+          "we can not validate your user. They are not a member of FBW48",
+      });
+  }
+  res.student = req.body;
+  next();
+};
+
+// filtering the
 // Controllers
 // Fetch all the data in the DB
 //http://localhost:5000/user
@@ -36,26 +72,26 @@ const getAllStudents = async (req, res) => {
 //http://localhost:5000/user
 const addStudent = async (req, res) => {
   const student = new StudentsData({
-    username: req.body.username,
-    userPass: req.body.userPass,
-    age: req.body.age,
-    fbw: req.body.fbw,
-    toolStack: req.body.toolStack,
-    email: req.body.email,
+    username: res.student.username,
+    userPass: res.student.userPass,
+    age: res.student.age,
+    fbw: res.student.fbw,
+    toolStack: res.student.toolStack,
+    email: res.student.email,
   });
   try {
     const newStudent = await student.save();
-    res
-      .status(201)
-      .json({ message: `${newStudent.username} was added to the DB!` });
+    res.status(201).json({ message: `this user is valid!` });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
 //Display user - http://localhost:5000/user/display/:name
-const displayUser = async (req, res) => res.status(200).json(res.student);
-
+const displayUser = async (req, res) => {
+  console.log(res.student);
+  res.status(200).json(res.student);
+};
 // Updating one student partial or full information
 const updateOneStudent = async (req, res) => {
   //   console.log(res.student);
@@ -117,4 +153,6 @@ module.exports = {
   displayUser,
   updateOneStudent,
   updateAllStudentData,
+  capitalizeUsername,
+  mustContain,
 };

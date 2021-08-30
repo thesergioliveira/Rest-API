@@ -10,7 +10,7 @@ const studentsDataSchema = new mongoose.Schema({
     type: String,
     required: [
       true,
-      "You will be given a default password of 123456, for security reasons.please change as soon as possible!",
+      "For security reasons it is necessary to have a UserPass!",
     ],
   },
   age: {

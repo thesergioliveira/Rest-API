@@ -8,13 +8,15 @@ const {
   displayUser,
   updateOneStudent,
   updateAllStudentData,
+  capitalizeUsername,
+  mustContain,
 } = require("../controllers/studentsControllers");
 
-router.route("/").get(getAllStudents).post(addStudent);
+router.route("/").get(getAllStudents).post(mustContain, addStudent);
 router
   .route("/:name")
   .put(updateAllStudentData)
   .patch(getStudent, updateOneStudent);
-router.route("/display/:name").get(getStudent, displayUser);
+router.route("/display/:name").get(getStudent, capitalizeUsername, displayUser);
 
 module.exports = router;
