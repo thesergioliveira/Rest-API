@@ -9,7 +9,7 @@ const getStudent = async (req, res, next) => {
     // localhost:5000/user/display/Sergio
     user = await StudentsData.findOne({ username: req.params.name });
 
-    console.log(user);
+    // console.log(user);
     if (user == null)
       return res
         .status(404)
@@ -23,14 +23,41 @@ const getStudent = async (req, res, next) => {
 };
 
 // capitalizing first letter
-const processingStudent = async (req, res, next) => {
+const toUpperCase = async (req, res, next) => {
   // importing
-  let { username, userPass, age, fbw, toolStack, email } = res.student;
-  let newAge;
-  let newFbw;
+  let { username, userPass } = res.student;
+  // let newUsername;
   // processing
   username = username.charAt(0).toUpperCase() + username.slice(1);
-  let sortedTools = toolStack.sort();
+  // exporting
+  res.editedStudent = {
+    username,
+    userPass,
+  };
+  next();
+};
+
+// sorting toolStack alphabetically
+const sortAlpha = (req, res, next) => {
+  const { toolStack, email } = res.student;
+  let sortedTools;
+  sortedTools = toolStack.sort();
+
+  // exporting
+  res.sorted = {
+    ...res.editedStudent,
+    ...res.numbers,
+    sortedTools,
+    email,
+  };
+  next();
+};
+// changing age and fbw into Number
+const intoNumber = (req, res, next) => {
+  const { age, fbw } = res.student;
+  let newAge;
+  let newFbw;
+
   if (typeof age !== "string") {
     newAge = age;
   } else {
@@ -42,18 +69,13 @@ const processingStudent = async (req, res, next) => {
     newFbw = Number(fbw);
   }
   // exporting
-  res.editedStudent = {
-    username,
-    userPass,
+  res.numbers = {
     newAge,
     newFbw,
-    sortedTools,
-    email,
   };
-  console.log(res.editedStudent);
+  // console.log(res.forDisplay);
   next();
 };
-
 // checking out if required DB Schema was met
 const mustContain = (req, res, next) => {
   const { username, userPass, age, fbw, toolStack, email } = req.body;
@@ -110,8 +132,8 @@ const addStudent = async (req, res) => {
 
 //Display user - http://localhost:5000/user/display/:name
 const displayUser = async (req, res) => {
-  // console.log(res.editedStudent);
-  res.status(200).json(res.editedStudent);
+  console.log(res.forDisplay);
+  res.status(200).json(res.sorted);
 };
 // Updating one student partial or full information
 const updateOneStudent = async (req, res) => {
@@ -174,6 +196,8 @@ module.exports = {
   displayUser,
   updateOneStudent,
   updateAllStudentData,
-  processingStudent,
+  toUpperCase,
+  sortAlpha,
+  intoNumber,
   mustContain,
 };

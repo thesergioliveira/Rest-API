@@ -25,8 +25,11 @@ mongoose
 
 // Creating and defining the response for the root route
 
-const students = require("./router/students");
-app.use("/user", students);
+const userRouters = require("./router/user");
+// console.log(userRouters);
+app.use("/user", userRouters);
+const displayRouter = require("./router/display");
+app.use("/display", displayRouter);
 
 app.get("/", async (req, res) => {
   res.status(200);
