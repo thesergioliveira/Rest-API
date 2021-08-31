@@ -1,8 +1,10 @@
 const express = require("express");
-const app = express();
 const { readFile } = require("fs");
 const morgan = require("morgan");
+const path = require("path");
+const faker = require("faker");
 
+const app = express();
 // Print verbose in the terminal
 app.use(morgan("dev"));
 // To be able to process all the json files
