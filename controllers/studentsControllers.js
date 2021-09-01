@@ -18,18 +18,21 @@ const getStudent = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
   res.student = user;
-  console.log(res.student);
+  // console.log(res.student);
   next();
 };
 
 // capitalizing first letter
 const toUpperCase = async (req, res, next) => {
   // importing
-  let { username } = res.student;
+  console.log("name from DB:", res.student.username);
+  const { username } = res.student;
+  let newUsername;
   // console.log("straight from DB:", res.student.username);
   // processing and exporting
-  res.student.username = username.charAt(0).toUpperCase() + username.slice(1);
-  // console.log("edited username:", res.student);
+  newUsername = username.charAt(0).toUpperCase() + username.slice(1);
+  res.student.username = newUsername;
+  console.log("edited username:", newUsername);
   next();
 };
 
@@ -43,14 +46,16 @@ const sortAlpha = (req, res, next) => {
 // changing age and fbw into Number
 const intoNumber = (req, res, next) => {
   const { age, fbw } = res.student;
+  let newAge;
+  let newFbw;
 
-  if (typeof age == "string") Number(age); //could also work as parseInt(age, 10);
+  if (typeof age == "string") newAge = Number(age); //could also work as parseInt(age, 10);
 
-  if (typeof fbw == "string") Number(fbw);
+  if (typeof fbw == "string") newFbw = Number(fbw);
 
   // exporting
-  res.student.age = age;
-  res.student.fbw = fbw;
+  res.student.age = newAge;
+  res.student.fbw = newFbw;
   // console.log(res.student);
   next();
 };
@@ -110,6 +115,7 @@ const addStudent = async (req, res) => {
 
 //Display user - http://localhost:5000/user/display/:name
 const displayUser = async (req, res) => {
+  console.log(res.student);
   res.status(200).json(res.student);
 };
 // Updating one student partial or full information
