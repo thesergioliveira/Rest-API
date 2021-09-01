@@ -25,32 +25,19 @@ const getStudent = async (req, res, next) => {
 // capitalizing first letter
 const toUpperCase = async (req, res, next) => {
   // importing
-  let { username, userPass } = res.student;
-  // let newUsername;
-  // processing
-  username = username.charAt(0).toUpperCase() + username.slice(1);
-  // exporting
-  res.editedStudent = {
-    username,
-    userPass,
-  };
-  console.log(res.editedStudent);
+  let { username } = res.student;
+  // console.log("straight from DB:", res.student.username);
+  // processing and exporting
+  res.student.username = username.charAt(0).toUpperCase() + username.slice(1);
+  // console.log("edited username:", res.student);
   next();
 };
 
 // sorting toolStack alphabetically
 const sortAlpha = (req, res, next) => {
-  const { toolStack, email } = res.student;
-  let sortedTools;
-  sortedTools = toolStack.sort();
-
+  const { toolStack } = res.student;
   // exporting
-  res.sorted = {
-    ...res.editedStudent,
-    ...res.numbers,
-    sortedTools,
-    email,
-  };
+  res.student.toolStack = toolStack.sort();
   next();
 };
 // changing age and fbw into Number
@@ -62,13 +49,9 @@ const intoNumber = (req, res, next) => {
   if (typeof fbw == "string") Number(fbw);
 
   // exporting
-  res.age = age;
-  res.fbw = fbw;
-  res.numbers = {
-    age,
-    fbw,
-  };
-  // console.log(res.forDisplay);
+  res.student.age = age;
+  res.student.fbw = fbw;
+  // console.log(res.student);
   next();
 };
 // checking out if required DB Schema was met
@@ -127,8 +110,7 @@ const addStudent = async (req, res) => {
 
 //Display user - http://localhost:5000/user/display/:name
 const displayUser = async (req, res) => {
-  // console.log(res.forDisplay);
-  res.status(200).json(res.sorted);
+  res.status(200).json(res.student);
 };
 // Updating one student partial or full information
 const updateOneStudent = async (req, res) => {
