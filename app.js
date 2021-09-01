@@ -3,6 +3,7 @@ const { readFile } = require("fs");
 const morgan = require("morgan");
 const path = require("path");
 const faker = require("faker");
+const StudentData = require("./model/studentsModel");
 
 const app = express();
 // Print verbose in the terminal
@@ -21,25 +22,39 @@ mongoose
     console.log(`There was a problem ${err.message}`);
   });
 
-// importing and using a main route
+app.set("view engine", "ejs");
+app.set("views", path.resolve(__dirname, "views/pages"));
+app.set("views", path.resolve(__dirname, "views/pages/"));
 
-// Creating and defining the response for the root route
-
-const userRouters = require("./router/user");
+const userRouter = require("./router/user");
 // console.log(userRouters);
-app.use("/user", userRouters);
+app.use("/user", userRouter);
 const displayRouter = require("./router/display");
 app.use("/display", displayRouter);
 
 app.get("/", async (req, res) => {
-  res.status(200);
-
-  readFile("./public/index.html", "utf8", (err, html) => {
+  StudentData.find((err, data) => {
+    console.log(data.username);
     if (err) {
-      res.status(500).json({ message: err.message });
+      console.log(err);
+      res.status(err.status).send("Ooops, there was a problem");
+    } else if (data.length) {
+      res.render("index.ejs", { data });
+    } else {
+      res.render("index.ejs", { data: {} });
     }
-    res.send(html);
   });
+
+  // res.render("index.ejs", { message: "Test" });
+  // readFile("./public/index.html", "utf8", (err, html) => {
+  //   if (err) {
+  //     res.status(500).json({ message: err.message });
+  //   }
+  //   res.send(html);
+  // });
 });
 
+app.get("/about", async (req, res) => {
+  res.render("about.ejs", { message: "Test" });
+});
 module.exports = app;

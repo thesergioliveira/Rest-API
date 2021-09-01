@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rest API</title>
+  </head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      /* border: 2px solid red; */
+    }
+  </style>
+  <body>
+    <div class="data-container">
+      <%if(data.length) {%>
+      <table>
+        <thead>
+          <th>username</th>
+          <th>age</th>
+          <th>toolStack</th>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < data.length; i++){%>
+          <tr>
+            <td><%=data[i].username%></td>
+            <td><%=data[i].age%></td>
+            <td><%data[i].toolStack%></td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+      <%}%>
+    </div>
+  </body>
+</html>
