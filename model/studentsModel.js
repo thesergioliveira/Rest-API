@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const studentsDataSchema = new mongoose.Schema({
   username: {
     type: String,
-    // lowercase: true,
+    lowercase: true,
     trim: true,
     required: [true, "It is required to give a name "],
   },
@@ -16,11 +16,11 @@ const studentsDataSchema = new mongoose.Schema({
   },
   age: {
     type: {},
-    min: 18,
-    required: [
-      true,
-      "Please provide your age. Also note, that you must be above 18 in order to use the Application!",
-    ],
+    // min: 18,
+    // required: [
+    //   true,
+    //   "Please provide your age. Also note, that you must be above 18 in order to use the Application!",
+    // ],
   },
   fbw: {
     type: {},

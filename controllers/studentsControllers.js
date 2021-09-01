@@ -18,7 +18,7 @@ const getStudent = async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
   res.student = user;
-  // console.log(res.student);
+  console.log(res.student);
   next();
 };
 
@@ -34,6 +34,7 @@ const toUpperCase = async (req, res, next) => {
     username,
     userPass,
   };
+  console.log(res.editedStudent);
   next();
 };
 
@@ -55,23 +56,17 @@ const sortAlpha = (req, res, next) => {
 // changing age and fbw into Number
 const intoNumber = (req, res, next) => {
   const { age, fbw } = res.student;
-  let newAge;
-  let newFbw;
 
-  if (typeof age !== "string") {
-    newAge = age;
-  } else {
-    newAge = Number(age); //could also work as parseInt(age, 10);
-  }
-  if (typeof fbw !== "string") {
-    newFbw = fbw;
-  } else {
-    newFbw = Number(fbw);
-  }
+  if (typeof age == "string") Number(age); //could also work as parseInt(age, 10);
+
+  if (typeof fbw == "string") Number(fbw);
+
   // exporting
+  res.age = age;
+  res.fbw = fbw;
   res.numbers = {
-    newAge,
-    newFbw,
+    age,
+    fbw,
   };
   // console.log(res.forDisplay);
   next();
@@ -84,7 +79,7 @@ const mustContain = (req, res, next) => {
       message:
         "We cannot validate your user. The keys username, userPass, age, fbw and email are required make sure to add them :) ",
     });
-  } else if (age <= "18") {
+  } else if (parseInt(age, 10) <= 18) {
     return res.status(400).json({
       message:
         "We can not validate your user. We don't accept pp that are below 18 years of age",
@@ -132,7 +127,7 @@ const addStudent = async (req, res) => {
 
 //Display user - http://localhost:5000/user/display/:name
 const displayUser = async (req, res) => {
-  console.log(res.forDisplay);
+  // console.log(res.forDisplay);
   res.status(200).json(res.sorted);
 };
 // Updating one student partial or full information
