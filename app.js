@@ -66,5 +66,5 @@ app
   .get("/register", async (req, res) => {
     res.render("registration.ejs");
   })
-  .post("/register", addStudent);
+  .post("/register", mustContain, addStudent);
 module.exports = app;
