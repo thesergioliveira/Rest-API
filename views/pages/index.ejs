@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <!-- <head>
+
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,42 +10,57 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"
     />
     <title>Rest API</title>
-  </head>
-  <style>
-    body {
-      width: 75vw;
-      margin: 0 auto;
-      text-align: center;
-      border: red 2px solid;
-    }
-    .nav-style {
-      display: flex;
-      flex-direction: row;
-      margin: 0 auto;
-      gap: 1.5rem;
-    }
+    <style>
+      body {
+        width: 75vw;
+        margin: 0 auto;
+        text-align: center;
+        /* border: red 2px solid; */
+      }
+      .nav-style {
+        display: flex;
+        flex-direction: row;
+        margin: 0 auto;
+        gap: 1.5rem;
+      }
+      .data-container {
+        margin-top: 2vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      thead th {
+        padding: 0 0.3rem 0 0.3rem;
+        margin: 1.5rem;
+        border-bottom: 2px solid gray;
+      }
+      td {
+        padding: 0.15rem;
+      }
+    </style>
+  </head> -->
+  <head>
+    <%- include("../partials/head") %>
+    <style>
     .data-container {
       margin-top: 2vh;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-  </style>
+   }
+  thead th {
+    padding: 0 0.3rem 0 0.3rem;
+    margin: 1.5rem;
+    border-bottom: 2px solid gray;
+  }
+  td {
+    padding: 0.15rem;
+  }
+    </style>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <ul class="navbar-nav mr-auto nav-style">
-          <li class="nav-item">
-            <a href="/" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="/register" class="nav-link">Register User</a>
-          </li>
-          <li class="nav-item">
-            <a href="/about" class="nav-link">About us</a>
-          </li>
-        </ul>
-      </nav>
+      <%- include("../partials/nav");%>
     </header>
     <div class="data-container">
       <%if(data.length) {%>
@@ -66,5 +82,6 @@
       </table>
       <%}%>
     </div>
+    <footer><%- include("../partials/footer");%></footer>
   </body>
 </html>

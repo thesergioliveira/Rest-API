@@ -34,7 +34,8 @@ app.use("/display", displayRouter);
 
 app.get("/", async (req, res) => {
   StudentData.find((err, data) => {
-    console.log(data.username);
+    // console.log(data.username);
+    console.log("This is the date:", new Date().getFullYear());
     if (err) {
       console.log(err);
       res.status(err.status).send("Ooops, there was a problem");
@@ -54,7 +55,7 @@ app.get("/", async (req, res) => {
   // });
 });
 
-app.get("/about", async (req, res) => {
-  res.render("about.ejs", { message: "Test" });
+app.get("/register", async (req, res) => {
+  res.render("registration.ejs", { message: "Test" });
 });
 module.exports = app;
