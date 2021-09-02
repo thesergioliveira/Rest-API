@@ -4,38 +4,41 @@
       <%- include("../partials/head");%>
       <style>
           form{
+              /* width: 75vw;
+              margin: 0 auto;  */
               position: absolute;
-              top: 8rem;
-              left: 35vw;
+              top: 5rem;
+              left: 50vw;
+              transform: translateX(-50%);
           }
       </style>
     </head>
   <body>
     <header><%- include("../partials/nav");%></header>
     <main>
-      <form action="/register" method="POST">
+      <form action="/" method="POST">
         <div class="mb-3">
           <label for="username" class="form-label">Name</label>
-          <input type="text" class="form-control" />
+          <input id="username" type="text" class="form-control" />
         </div>
         <div class="mb=3">
-          <label for="userPass" class="form-label">Password</label><input type="password" class="form-control"/>
+          <label for="userPass" class="form-label">Password</label><input id="userPass" type="password" class="form-control"/>
           <div></div>
         </div class="mb-3">
         <div class="mb-3">
-          <label for="age" class="form-label"></label>Age<input type="text" class="form-control"/>
+          <label for="age" class="form-label"></label>Age<input id="age" type="text" class="form-control"/>
           <div class="form-text">*must be above 18 years old 😉 </div>
         </div>
         <div class="mb-3">
-          <label for="fbw" class="form-label"></label>Class<input type="text" class="form-control"/>
+          <label for="fbw" class="form-label"></label>Class<input id="fbw" type="text" class="form-control"/>
           <div class="form-text">*please enter you class number</div>
         </div>
         <div class="mb-3">
-          <label for="toolStack" class="form-label"></label>toolStack<input type="text" class="form-control"/>
+          <label for="toolStack" class="form-label"></label>toolStack<input id="toolStack" type="text" class="form-control"/>
           <div class="form-text">*which tools are you a master of 💪 </div>
         </div>
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label><input type="email" class="form-control"/>
+          <label for="email" class="form-label">Email</label><input id="email" type="email" class="form-control"/>
           <div class="form-text">*we will never share you email with anyone 🔐</div>
         </div>
         <button type="submit" class="btn btn-primary">create user</button>

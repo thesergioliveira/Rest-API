@@ -28,7 +28,7 @@ mongoose
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "views/pages"));
-app.set("views", path.resolve(__dirname, "views/pages/"));
+// app.set("views", path.resolve(__dirname, "views/pages/"));
 
 const userRouter = require("./router/user");
 // console.log(userRouters);
@@ -66,5 +66,5 @@ app
   .get("/register", async (req, res) => {
     res.render("registration.ejs");
   })
-  .post("/register", mustContain, addStudent);
+  .post("/register", addStudent);
 module.exports = app;
