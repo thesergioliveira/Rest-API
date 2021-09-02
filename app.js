@@ -4,6 +4,10 @@ const morgan = require("morgan");
 const path = require("path");
 const faker = require("faker");
 const StudentData = require("./model/studentsModel");
+const {
+  mustContain,
+  addStudent,
+} = require("./controllers/studentsControllers");
 
 const app = express();
 // Print verbose in the terminal
@@ -38,8 +42,7 @@ app.get("/", async (req, res) => {
 
 app.get("/display", async (req, res) => {
   StudentData.find((err, data) => {
-    // console.log(data.username);
-    console.log("This is the date:", new Date().getFullYear());
+    // console.log(data[0].toolStack);
     if (err) {
       console.log(err);
       res.status(err.status).send("Ooops, there was a problem");
@@ -59,7 +62,9 @@ app.get("/display", async (req, res) => {
   // });
 });
 
-app.get("/register", async (req, res) => {
-  res.render("registration.ejs");
-});
+app
+  .get("/register", async (req, res) => {
+    res.render("registration.ejs");
+  })
+  .post("/register", mustContain, addStudent);
 module.exports = app;
