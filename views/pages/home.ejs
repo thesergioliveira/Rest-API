@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../partials/head");%>
+  </head>
+  <style>
+    body {
+      font-family: "Courier New", Courier, monospace;
+      text-align: center;
+    }
+    h1 {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 1.8em;
+      margin-top: 5rem;
+      /* border: 2px solid red; */
+    }
+  </style>
+  <body>
+    <header><%- include("../partials/nav"); %></header>
+    <div class="main-container">
+      <div class="header">
+        <h1 class="header-dark">The Classroom API</h1>
+      </div>
+      <div class="image-container">
+        <iframe
+          src="https://giphy.com/embed/xUPGGDNsLvqsBOhuU0"
+          width="480"
+          height="360"
+          frameborder="0"
+          class="giphy-embed"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+    <footer><%-include("../partials/footer");%></footer>
+  </body>
+</html>

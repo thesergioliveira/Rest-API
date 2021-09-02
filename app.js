@@ -33,6 +33,10 @@ const displayRouter = require("./router/display");
 app.use("/display", displayRouter);
 
 app.get("/", async (req, res) => {
+  res.render("home.ejs");
+});
+
+app.get("/display", async (req, res) => {
   StudentData.find((err, data) => {
     // console.log(data.username);
     console.log("This is the date:", new Date().getFullYear());
@@ -40,9 +44,9 @@ app.get("/", async (req, res) => {
       console.log(err);
       res.status(err.status).send("Ooops, there was a problem");
     } else if (data.length) {
-      res.render("index.ejs", { data });
+      res.render("display.ejs", { data });
     } else {
-      res.render("index.ejs", { data: {} });
+      res.render("display.ejs", { data: {} });
     }
   });
 
@@ -56,6 +60,6 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/register", async (req, res) => {
-  res.render("registration.ejs", { message: "Test" });
+  res.render("registration.ejs");
 });
 module.exports = app;
