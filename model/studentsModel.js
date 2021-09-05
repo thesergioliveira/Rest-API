@@ -15,7 +15,7 @@ const studentsDataSchema = new mongoose.Schema({
     ],
   },
   age: {
-    type: {},
+    type: Number,
     // min: 18,
     // required: [
     //   true,
@@ -23,7 +23,7 @@ const studentsDataSchema = new mongoose.Schema({
     // ],
   },
   fbw: {
-    type: {},
+    type: Number,
   },
   toolStack: Array,
   email: {

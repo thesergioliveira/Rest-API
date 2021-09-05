@@ -61,6 +61,7 @@ const intoNumber = (req, res, next) => {
 };
 // checking out if required DB Schema was met
 const mustContain = (req, res, next) => {
+  console.log(req.body);
   const { username, userPass, age, fbw, toolStack, email } = req.body;
   if (!username || !userPass || !age || !fbw || !email) {
     return res.status(400).json({
@@ -72,7 +73,7 @@ const mustContain = (req, res, next) => {
       message:
         "We can not validate your user. We don't accept pp that are below 18 years of age",
     });
-  } else if (fbw != "48") {
+  } else if (fbw != 48) {
     return res.status(400).json({
       message: "we can not validate your user. They are not a member of FBW48",
     });
@@ -97,6 +98,7 @@ const getAllStudents = async (req, res) => {
 // Adding a student in the DB
 //http://localhost:5000/user
 const addStudent = async (req, res) => {
+  // console.log(req.body);
   const student = new StudentsData({
     username: res.student.username,
     userPass: res.student.userPass,

@@ -8,13 +8,13 @@ const {
   mustContain,
   addStudent,
 } = require("./controllers/studentsControllers");
-
+const cors = require("cors");
 const app = express();
 // Print verbose in the terminal
 app.use(morgan("dev"));
 // To be able to process all the json files
 app.use(express.json());
-
+app.use(cors());
 // Initializing an instance of mongoDB and connecting with local DB
 const mongoose = require("mongoose");
 const DB_URL = process.env.DB_URL;
