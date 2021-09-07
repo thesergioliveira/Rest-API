@@ -17,7 +17,7 @@ const {
 router.route("/").get(getAllStudents).post(mustContain, addStudent);
 router
   .route("/:name")
-  .put(updateAllStudentData)
+  .put(getStudent, updateAllStudentData)
   .patch(getStudent, updateOneStudent);
 
 module.exports = router;

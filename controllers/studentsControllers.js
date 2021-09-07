@@ -147,19 +147,19 @@ const updateOneStudent = async (req, res) => {
 
 // Updating all information of a specific student - htpp://localhost:5000/user/:name
 const updateAllStudentData = async (req, res) => {
-  const { name, pass, newAge, newClass, tools, contact } = req.body;
+  const { username, userPass, age, fbw, toolStack, email} = req.body;
   console.log(req.params.name);
   try {
     await StudentsData.updateOne(
       { username: req.params.name },
       {
         $set: {
-          username: name,
-          userPass: pass,
-          age: newAge,
-          //   fbw: newClass,
-          //   toolStack: tools,
-          //   email: contact,
+          username: username, // req.body.username,
+          userPass: userPass, //req.body.userPass,
+          // age: age, //req.body.age,
+          // fbw: fbw, //req.body.fbw,
+          toolStack: toolStack, //req.body.toolStack,
+          // email: email, //req.body.email,
         },
         $currentDate: {
           studentUpdateDate: Date.now,
