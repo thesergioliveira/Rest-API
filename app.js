@@ -1,8 +1,6 @@
 const express = require("express");
-const { readFile } = require("fs");
 const morgan = require("morgan");
 const path = require("path");
-const faker = require("faker");
 const StudentData = require("./model/studentsModel");
 const {
   mustContain,
@@ -41,19 +39,19 @@ mongoose
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "views/pages"));
 
-// Importing user route
-const postmanRoute = require("./router/postman");
-app.use("/postman", postmanRoute);
+// Importing postman route
+const hiddenRoute = require("./router/hidden");
+app.use("/hidden", hiddenRoute);
 
 // Importing the display router
 const displayRoute = require("./router/display");
 app.use("/display", displayRoute);
 
 // Setting the root route
-app.get("/home", async (req, res) => {
+app.get("/", async (req, res) => {
   res.render("home.ejs");
 });
 
-// Setting the register route with get and post method
+// Importing the register route with get and post method
 const registerRoute = require("./router/register");
 app.use("/", registerRoute);
