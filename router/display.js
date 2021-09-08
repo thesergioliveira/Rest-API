@@ -3,15 +3,18 @@ const express = require("express");
 const router = express.Router();
 
 // Importing middleware and controllers
-const {
-  getStudent,
-  toUpperCase,
-  intoNumber,
-  sortAlpha,
-  displayUser,
-} = require("../controllers/studentsControllers");
+const middleware = require("../middlewares/middleware");
+const controller = require("../controllers/studentsControllers");
+
 router
-  .route("/:name")
-  .get(getStudent, toUpperCase, intoNumber, sortAlpha, displayUser);
+  .route("/postman/:name")
+  .get(
+    middleware.getStudent,
+    middleware.toUpperCase,
+    middleware.intoNumber,
+    middleware.sortAlpha,
+    controller.displayUser
+  );
+router.route("/allUsers", controller.displayAll);
 
 module.exports = router;
