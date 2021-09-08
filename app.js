@@ -8,17 +8,20 @@ const {
   mustContain,
   addStudent,
 } = require("./controllers/studentsControllers");
-const cors = require("cors");
+
 const app = express();
+
 // Print verbose in the terminal
 app.use(morgan("dev"));
+
 // To be able to process all the json files
 app.use(express.json());
-app.use(cors());
+
 // Initializing an instance of mongoDB and connecting with local DB
 const mongoose = require("mongoose");
 const DB_URL = process.env.DB_URL;
 
+// Connecting the DB
 mongoose
   .connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(console.log("Local mongoDB is connected 💪"))
@@ -26,20 +29,24 @@ mongoose
     console.log(`There was a problem ${err.message}`);
   });
 
+// Setting the templating engine and the path to the files to be rendered
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "views/pages"));
-// app.set("views", path.resolve(__dirname, "views/pages/"));
 
+// Importing user route
 const userRouter = require("./router/user");
-// console.log(userRouters);
 app.use("/user", userRouter);
+
+// Importing the display router
 const displayRouter = require("./router/display");
 app.use("/display", displayRouter);
 
+// Setting the root route
 app.get("/", async (req, res) => {
   res.render("home.ejs");
 });
 
+// Setting the display route
 app.get("/display", async (req, res) => {
   StudentData.find((err, data) => {
     // console.log(data[0].toolStack);
@@ -53,6 +60,7 @@ app.get("/display", async (req, res) => {
     }
   });
 
+  // Rendering files without a templating engine
   // res.render("index.ejs", { message: "Test" });
   // readFile("./public/index.html", "utf8", (err, html) => {
   //   if (err) {
@@ -62,6 +70,7 @@ app.get("/display", async (req, res) => {
   // });
 });
 
+// Setting the register route with get and post method
 app
   .get("/register", async (req, res) => {
     res.render("registration.ejs");
